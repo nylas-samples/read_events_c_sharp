@@ -18,17 +18,21 @@ var request = new RestSharp.RestRequest(Method.GET);
 request.AddHeader("Content-Type", "application/json");
 request.AddHeader("Authorization", "Bearer " + System.Environment.GetEnvironmentVariable("ACCESS_TOKEN"));
 
+// Get current date and time
 DateTime now = DateTime.Now;
 DateTimeOffset after = new DateTimeOffset(now.Year, now.Month, now.Day, 0, 0, 0, TimeSpan.Zero);
 DateTimeOffset before = new DateTimeOffset(now.Year, now.Month, now.Day, 23, 59, 59, TimeSpan.Zero);
 
+//Add parameters
 request.AddParameter("calendar_id", System.Environment.GetEnvironmentVariable("CALENDAR_ID")!);
 request.AddParameter("starts_after", after.ToUnixTimeSeconds());
 request.AddParameter("ends_before", before.ToUnixTimeSeconds());
 
+// Call the API
 IRestResponse response = client.Execute(request);
-// Print the response
+// Convert the response from JSON
 dynamic? responseContent = JsonConvert.DeserializeObject( response.Content );
+// Loop through each item
 foreach( dynamic? i in responseContent! )
 {
     string title = i.title;
@@ -41,6 +45,7 @@ foreach( dynamic? i in responseContent! )
         string? email = item.GetValue("email")!.ToString();
         participants_list = participants_list + email + ",";
     }
+    // Print results
     Console.WriteLine("Title : {0}, Start: {1}, End: {2}, Participants: {3} \n", 
     title, dt_start.AddSeconds(start).ToLocalTime(),dt_start.AddSeconds(end).ToLocalTime(),participants_list.TrimEnd(','));
 }
