@@ -3,7 +3,6 @@ using DotNetEnv;
 using RestSharp;
 using System.Text.Json;
 
-
 // Load .env file
 DotNetEnv.Env.Load();
 DotNetEnv.Env.TraversePath().Load();
