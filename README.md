@@ -14,14 +14,14 @@ $ dotnet new console
 
 - RestSharp
 - DotNetEnv
-- Newtonsoft.Json
 
 ### Gather environment variables
 
 You'll need the following values:
 
 ```text
-ACCESS_TOKEN = ""
+API_KEY_V3 = ""
+GRANT_ID = ""
 CALENDAR_ID = ""
 ```
 
